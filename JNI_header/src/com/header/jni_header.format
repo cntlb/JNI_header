@@ -1,0 +1,31 @@
+##注释
+#去除包名
+#Java_com_example_ScriptManager_
+#
+#去除/*部分
+/\*\r\n
+
+#去除注释*/部分
+\*/\r\n
+
+#去除Class:行
+.*Class:.*\r\n
+
+#构造JNINativeMethod, "Method:"后面的文字加引号
+#name
+.*Method:\s*(\S*)
+\{"$1",
+#签名 signature
+.*Signature:\s*(\S*)
+"$1",
+#地址 fnPtr
+.*JNICALL\s*(\S*)
+\(void*\)&$1
+#去除参数列表,JNINativeMethod结束
+.*JNIEnv.*;.*
+\},
+#格式化
+,\r\n
+, 
+(\{.*)\r\n
+$1
